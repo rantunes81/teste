@@ -1,0 +1,51 @@
+{
+  "extractors": [
+    {
+      "title": "JsonParser",
+      "extractor_type": "json",
+      "converters": [],
+      "order": 0,
+      "cursor_strategy": "cut",
+      "source_field": "message",
+      "target_field": "",
+      "extractor_config": {
+        "list_separator": ", ",
+        "kv_separator": "=",
+        "key_prefix": "x-",
+        "key_separator": "_",
+        "replace_key_whitespace": false,
+        "key_whitespace_replacement": "_"
+      },
+      "condition_type": "regex",
+      "condition_value": "^\\{"
+    },
+    {
+      "title": "Timestamp",
+      "extractor_type": "regex_replace",
+      "converters": [],
+      "order": 0,
+      "cursor_strategy": "copy",
+      "source_field": "x-timestamp",
+      "target_field": "timestamp",
+      "extractor_config": {
+        "replacement": "$1 $2",
+        "regex": "^(.*)T(.*)Z"
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "Message",
+      "extractor_type": "copy_input",
+      "converters": [],
+      "order": 0,
+      "cursor_strategy": "cut",
+      "source_field": "x-message",
+      "target_field": "message",
+      "extractor_config": {},
+      "condition_type": "none",
+      "condition_value": ""
+    }
+  ],
+  "version": "4.0.2"
+}
